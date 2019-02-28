@@ -1,0 +1,51 @@
+@import '../../style/reset.css';
+
+.discover {
+    width: 100%;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    width: 100%;
+    height: 50px;
+    background: rgb(229, 71, 60);
+    img {
+        width: 32px;
+        height: 32px;
+    }
+}
+.banner-item {
+    img {
+        width: 100%;
+    }
+}
+.menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    div {
+        display: flex;
+        flex-direction: column;
+        span {
+            color: #333;
+            text-align: center;
+        }
+        .music, .rank {
+            margin-bottom: 10px;
+            width: 48px;
+            height: 48px;
+            background-size: contain;
+        }
+        .music {
+            background-image: url(../../static/icn_playlist.png);
+        }
+        .rank {
+            background-image: url(../../static/icn_rank.png);
+        }
+    }
+}
