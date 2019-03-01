@@ -12,13 +12,13 @@ class Discover extends Component {
             bannerList: [], // 轮播图
             personalized: [],   // 推荐歌单
         };
-        this.goSongList = this.goSongList.bind(this);
+        this.goCollection = this.goCollection.bind(this);
     }
 
-    goSongList(id) {
+    goCollection(id) {
         // todo 去具体的歌单页面
         console.log(this.props);
-        this.props.history.push(`/songList/${id}`);
+        this.props.history.push(`/collection/${id}`);
     }
 
     componentDidMount() {
@@ -64,7 +64,7 @@ class Discover extends Component {
                         <span>排行版</span>
                     </div>
                 </div>
-                <RecommendList title={'推荐歌单'} list={personalized} onItemClick={this.goSongList}></RecommendList>
+                <RecommendList title={'推荐歌单'} list={personalized} onItemClick={this.goCollection}></RecommendList>
             </div>
         );
     }

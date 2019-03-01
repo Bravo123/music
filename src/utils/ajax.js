@@ -6,7 +6,7 @@ export function ajax(options) {
         axios({
             url: `${URL}/${options.api}`,
             method: options.method || 'get',
-            [options.method === 'post' ? 'data' : 'params']: options.method === 'post' ? options.data : ''
+            [options.method === 'post' ? 'data' : 'params']: options.data
         }).then(response => {
             if (response.status === HTTP_OK) {
                 resolve(response.data);
