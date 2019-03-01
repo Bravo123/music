@@ -1,14 +1,17 @@
-import axios from 'axios'
-import {URL} from '../config/config'
+import { ajax } from '../utils/ajax';
 
 //获取轮播
 export function getBanner() {
-    const url = `${URL}/banner`;
-    return axios.get(url);
-  }
+  return ajax({
+    api: 'banner',
+    method: 'get'
+  });
+}
   
-  //获取推荐歌单
-  export function getPersonalized() {
-    const url = `${URL}/personalized`;
-    return axios.get(url);
-  }
+//获取推荐歌单
+export function getPersonalized() {
+  return ajax({
+    api: 'personalized',
+    method: 'get'
+  });
+}

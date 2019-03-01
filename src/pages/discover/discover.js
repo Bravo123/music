@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { getBanner, getPersonalized } from '../../api/index'
-import { HTTP_OK } from '../../config/config'
 import { Carousel, Icon } from 'antd'
 import RecommendList from '../../components/recommentList/recommentList'
 
@@ -12,29 +11,27 @@ class Discover extends Component {
         this.state = {
             bannerList: [], // 轮播图
             personalized: [],   // 推荐歌单
-        }
+        };
+        this.goSongList = this.goSongList.bind(this);
     }
 
     goSongList(id) {
         // todo 去具体的歌单页面
+        console.log(this.props);
+        this.props.history.push(`/songList/${id}`);
     }
 
     componentDidMount() {
         console.log(this.props);
         getBanner().then(res => {
-            console.log(res, 'banner');
-            if (res.status === HTTP_OK) {
-                this.setState({
-                    bannerList: res.data.banners
-                })
-            }
+            this.setState({
+                bannerList: res.banners
+            })
         })
         getPersonalized().then(res => {
-            if (res.status === HTTP_OK) {
-                this.setState({
-                    personalized: res.data.result
-                })
-            }
+            this.setState({
+                personalized: res.result
+            })
         })
     }
 
