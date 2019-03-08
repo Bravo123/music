@@ -24,3 +24,13 @@ export function getSongListDetail(id) {
     data: id
   });
 }
+
+// 获取歌单列表
+// offset limit order
+export function getCollectionList(data) {
+  return ajax({
+    api: 'top/playlist',
+    method: 'get',
+    data: data
+  });
+}

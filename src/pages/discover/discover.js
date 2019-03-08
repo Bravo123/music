@@ -13,12 +13,18 @@ class Discover extends Component {
             personalized: [],   // 推荐歌单
         };
         this.goCollection = this.goCollection.bind(this);
+        this.goHotCollectionList = this.goHotCollectionList.bind(this);
     }
 
     goCollection(id) {
         // todo 去具体的歌单页面
         console.log(this.props);
         this.props.history.push(`/collection/${id}`);
+    }
+
+    goHotCollectionList() {
+        // 去歌单列表
+        this.props.history.push('/collectionList');
     }
 
     componentDidMount() {
@@ -55,7 +61,7 @@ class Discover extends Component {
                 }
                 </Carousel>
                 <div className="menu">
-                    <div>
+                    <div onClick={this.goHotCollectionList}>
                         <span className="music"></span>
                         <span>歌单</span>
                     </div>
