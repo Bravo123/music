@@ -11,6 +11,7 @@ class Discover extends Component {
         this.state = {
             bannerList: [], // 轮播图
             personalized: [],   // 推荐歌单
+            loading: true,
         };
         this.goCollection = this.goCollection.bind(this);
         this.goHotCollectionList = this.goHotCollectionList.bind(this);
@@ -28,49 +29,50 @@ class Discover extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
-        getBanner().then(res => {
+        Promise.all([
+            getBanner(),
+            getPersonalized(),
+        ]).then(res => {
             this.setState({
-                bannerList: res.banners
-            })
-        })
-        getPersonalized().then(res => {
-            this.setState({
-                personalized: res.result
+                bannerList: res[0].banners,
+                personalized: res[1].result,
+                loading: false
             })
         })
     }
 
     render() {
-        const { bannerList, personalized } = this.state;
+        const { loading, bannerList, personalized } = this.state;
         return(
             <div className="discover">
-                <div className="header">
-                    <Icon type="menu-unfold" style={{ fontSize: '24px', color: '#fff' }} />
-                    <img src="static/logo.png" alt=""/>
-                    <Icon type="search" style={{ fontSize: '24px', color: '#fff' }} />
-                </div>
-                <Carousel autoplay>
-                {
-                    bannerList.length > 0 && bannerList.map((item, index) => <div 
-                        className="banner-item"
-                        key={item.id + index}>
-                        <img className="banner-image" src={item.picUrl} alt={item.name}/>
+                { !loading && <div>
+                    <div className="header">
+                        <Icon type="menu-unfold" style={{ fontSize: '24px', color: '#fff' }} />
+                        <img src="static/logo.png" alt=""/>
+                        <Icon type="search" style={{ fontSize: '24px', color: '#fff' }} />
                     </div>
-                    )
-                }
-                </Carousel>
-                <div className="menu">
-                    <div onClick={this.goHotCollectionList}>
-                        <span className="music"></span>
-                        <span>歌单</span>
+                    <Carousel autoplay>
+                    {
+                        bannerList.length > 0 && bannerList.map((item, index) => <div 
+                            className="banner-item"
+                            key={item.id + index}>
+                            <img className="banner-image" src={item.picUrl} alt={item.name}/>
+                        </div>
+                        )
+                    }
+                    </Carousel>
+                    <div className="menu">
+                        <div onClick={this.goHotCollectionList}>
+                            <span className="music"></span>
+                            <span>歌单</span>
+                        </div>
+                        <div>
+                            <span className="rank"></span>
+                            <span>排行版</span>
+                        </div>
                     </div>
-                    <div>
-                        <span className="rank"></span>
-                        <span>排行版</span>
-                    </div>
-                </div>
-                <RecommendList title={'推荐歌单'} list={personalized} onItemClick={this.goCollection}></RecommendList>
+                    <RecommendList title={'推荐歌单'} list={personalized} onItemClick={this.goCollection}></RecommendList>
+                </div> }
             </div>
         );
     }

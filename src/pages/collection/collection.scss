@@ -64,7 +64,7 @@
             justify-content: center;
             height: 100px;
             .song-title {
-                @include text2Line;
+                @include no-wrap-line(2);
                 width: 100%;
                 font-size: 16px;
                 font-weight: 500;
@@ -96,6 +96,7 @@
             display: flex;
             flex-direction: column;
             margin-left: 50px;
+            min-width: 0;
             width: 100%;
             height: 60px;
             border-bottom: 1px solid rgba($color: #000000, $alpha: .2);
@@ -112,17 +113,16 @@
                 color: #000;
             }
             .track-name {
+                @include no-wrap;
                 height: 28px;
                 width: 80%;
-                text-overflow: ellipsis;
-                overflow: hidden;
                 line-height: 28px;
                 font-size: 16px;
                 color: #000;
             }
             .track-desc {
                 width: 80%;
-                @include text2Line;
+                @include no-wrap;
                 font-size: 12px;
                 line-height: 18px;
                 color: #666;

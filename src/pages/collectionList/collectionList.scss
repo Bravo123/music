@@ -38,7 +38,7 @@
                 border-radius: 8px;
             }
             .name {
-                @include text2Line;
+                @include no-wrap-line(2);
                 display: flex;
                 flex: 1;
                 width: 100%;

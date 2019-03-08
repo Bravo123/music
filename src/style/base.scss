@@ -9,15 +9,6 @@
     font-size: 16px;
     color: #fff;
 }
-@mixin text2Line {
-    display: -webkit-box;
-    -webkit-line-clamp:2;	/*指定几行出现省略号*/
-    -webkit-box-orient:vertical;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    word-wrap: break-word;
-    word-break: break-all;
-}
 
 @mixin playCount {
     &:before {
@@ -46,4 +37,21 @@
         background-size: contain;
         background-repeat: no-repeat;
     }
+}
+//单行显示省略号
+@mixin no-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+//多行显示省略号
+@mixin no-wrap-line($line) {
+    display: -webkit-box;
+    -webkit-line-clamp: $line;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    // /*! autoprefixer: off */
+    -webkit-box-orient: vertical;
+    // /* autoprefixer: on */
 }
