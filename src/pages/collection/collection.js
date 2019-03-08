@@ -52,8 +52,8 @@ class songList extends Component {
                     {
                         collectionDetail.tracks.map((track, index) => 
                             <div className="track-item" key={track.id} data-index={index + 1}>
-                                <span className="track-name">{track.name}</span>
-                                <span className="track-desc">{track.artists[0].name} - {track.album.name}</span>
+                                <div className="track-name">{track.name}</div>
+                                <div className="track-desc">{track.artists[0].name} - {track.album.name}</div>
                             </div>
                         )
                     }
