@@ -13,13 +13,18 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Switch>
-            <Route path="/discover" component={Discover}></Route>
-            <Route path="/collection/:id" component={Collection}></Route>
-            <Route path="/collectionList" component={CollectionList}></Route>
-            <Redirect to="/discover"></Redirect>
-          </Switch>
-          { this.props.showPlayer && <Player />}
+          <div className="container">
+            <Switch>
+              <Route path="/discover" component={Discover}></Route>
+              <Route path="/collection/:id" component={Collection}></Route>
+              <Route path="/collectionList" component={CollectionList}></Route>
+              <Redirect to="/discover"></Redirect>
+            </Switch>
+          </div>
+          {this.props.showPlayer && <div className="bottom">
+              <Player />
+            </div>
+          }
         </div>
       </Router>
     );
