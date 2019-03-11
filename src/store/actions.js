@@ -1,5 +1,5 @@
 import * as ActionTypes from './actionTypes'
-import {findIndex} from 'common/util'
+// import {findIndex} from 'common/util'
 
 // 显示Player组件
 export function setShowPlayer(showPlayer) {
@@ -33,7 +33,8 @@ export const setAllPlay = ({playList, currentIndex}) => dispatch => {
 export const addPlay = music => (dispatch, getState) => {
   let playList = [...getState().playList];
   //查询当前播放列表是否有待插入的音乐，并返回其索引
-  let index = findIndex(playList, music);
+  // let index = findIndex(playList, music);
+  let index = 0;
   //当前播放列表有待插入的音乐时，直接改变当前播放音乐的索引
   if (index > -1) {
     dispatch(setCurrentIndex(index));

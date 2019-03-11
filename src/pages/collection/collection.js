@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import './collection.scss'
 import { getSongListDetail } from '../../api'
 import { Icon } from 'antd'
+import store from '../../store';
+import { setShowPlayer } from '../../store/actions';
 
 class songList extends Component {
     constructor(props) {
@@ -9,11 +11,11 @@ class songList extends Component {
         this.state = {
             collectionDetail: null
         };
-        this.playTrack = this.playTrack.bind(this);
     }
 
-    playTrack(trackId) {
-        console.log(trackId)
+    playMusic(music) {
+        console.log(music)
+        store.dispatch(setShowPlayer(true))
     }
 
     componentDidMount() {
@@ -51,7 +53,7 @@ class songList extends Component {
                     <div className="song-wrapper">
                     {
                         collectionDetail.tracks.map((track, index) => 
-                            <div className="track-item" key={track.id} data-index={index + 1}>
+                            <div onClick={() => this.playMusic(track)} className="track-item" key={track.id} data-index={index + 1}>
                                 <div className="track-name">{track.name}</div>
                                 <div className="track-desc">{track.artists[0].name} - {track.album.name}</div>
                             </div>
