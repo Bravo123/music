@@ -101,6 +101,11 @@
             width: 100%;
             height: 60px;
             border-bottom: 1px solid rgba($color: #000000, $alpha: .2);
+            &.active {
+                &::before, .track-desc, .track-name {
+                    color: red;
+                }
+            }
             &:last-of-type {
                 border-bottom: none;
             }

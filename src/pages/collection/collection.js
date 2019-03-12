@@ -3,19 +3,24 @@ import './collection.scss'
 import { getSongListDetail } from '../../api'
 import { Icon } from 'antd'
 import store from '../../store';
-import { setShowPlayer } from '../../store/actions';
+import { setShowPlayer, setCurrentMusic } from '../../store/actions';
 
 class songList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            collectionDetail: null
+            collectionDetail: null,
+            currentIndex: -1,
         };
     }
 
-    playMusic(music) {
+    playMusic(music, index) {
         console.log(music)
+        this.setState({
+            currentIndex: index
+        })
         store.dispatch(setShowPlayer(true))
+        store.dispatch(setCurrentMusic(music))
     }
 
     componentDidMount() {
@@ -28,7 +33,7 @@ class songList extends Component {
     }
     
     render() {
-        const { collectionDetail } = this.state;
+        const { collectionDetail, currentIndex } = this.state;
         return (
             <div>
             { collectionDetail && 
@@ -53,7 +58,7 @@ class songList extends Component {
                     <div className="song-wrapper">
                     {
                         collectionDetail.tracks.map((track, index) => 
-                            <div onClick={() => this.playMusic(track)} className="track-item" key={track.id} data-index={index + 1}>
+                            <div onClick={() => this.playMusic(track, index)} className={index === currentIndex ? `${'track-item'} ${'active'}` : 'track-item'} key={track.id} data-index={index + 1}>
                                 <div className="track-name">{track.name}</div>
                                 <div className="track-desc">{track.artists[0].name} - {track.album.name}</div>
                             </div>
