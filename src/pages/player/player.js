@@ -33,7 +33,7 @@ class player extends Component {
             { showMiniPlayer && <div className="wrapper">
                 <img className="cover" src={this.props.currentMusic.album.picUrl} alt="" />
                 <div className="music-info">
-                    <div className="name">{this.props.currentMusic.album.name}</div>
+                    <div className="name">{this.props.currentMusic.name}</div>
                     <div className="author">{this.props.currentMusic.artists[0].name}</div>
                 </div>
                 {isPlaying && <Icon className="icon" onClick={this.toggleStatus} type="pause-circle" style={{fontSize: '30px'}} />}

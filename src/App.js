@@ -33,7 +33,8 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   showPlayer: state.showPlayer,
-  currentMusic: state.currentMusic
+  currentMusic: state.currentMusic,
+  playList: state.playList
 })
 
 export default connect(mapStateToProps)(App)

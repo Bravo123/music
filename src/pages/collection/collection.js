@@ -3,7 +3,7 @@ import './collection.scss'
 import { getSongListDetail } from '../../api'
 import { Icon } from 'antd'
 import store from '../../store';
-import { setShowPlayer, setCurrentMusic } from '../../store/actions';
+import { setShowPlayer, setCurrentMusic, setPlayList } from '../../store/actions';
 
 class songList extends Component {
     constructor(props) {
@@ -15,12 +15,12 @@ class songList extends Component {
     }
 
     playMusic(music, index) {
-        console.log(music)
         this.setState({
             currentIndex: index
         })
         store.dispatch(setShowPlayer(true))
         store.dispatch(setCurrentMusic(music))
+        store.dispatch(setPlayList(this.state.collectionDetail))
     }
 
     componentDidMount() {
