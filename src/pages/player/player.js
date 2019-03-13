@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
 import './player.scss'
 import { Icon } from 'antd';
+import { fullAudioSrc } from '../../utils/utils';
+import store from '../../store';
+import { setCurrentMusic, setCurrentIndex } from '../../store/actions';
 
 class player extends Component {
     constructor(props) {
         super(props)
-        console.log(props)
         this.state = {
             showMiniPlayer: true,
             isPlaying: true,
+            currentIndex: -1
         }
         this.audioPlayer = React.createRef()
         this.toggleStatus = this.toggleStatus.bind(this)
+        this.musicEnded = this.musicEnded.bind(this);
     }
 
     toggleStatus() {
-        console.log(this.audioPlayer)
         if (this.audioPlayer.current.paused) {
             this.audioPlayer.current.play()
         } else {
@@ -26,8 +29,27 @@ class player extends Component {
         })
     }
 
+    musicEnded() {
+        // 自动播放playList中的下一首
+        this.setState({
+            currentIndex: this.state.currentIndex + 1
+        }, () => {
+            store.dispatch(setCurrentIndex(this.state.currentIndex))
+            store.dispatch(setCurrentMusic(this.props.playList.tracks[this.state.currentIndex]))
+        })
+        console.log(this.state)
+    }
+
+    componentDidMount() {
+        this.setState({
+            currentIndex: this.props.currentIndex
+        }, () => {
+            console.log(this.props)
+        })
+    }
+
     render() {
-        const { showMiniPlayer, isPlaying } = this.state;
+        const { showMiniPlayer, isPlaying } = this.state
         return (
             <div className="player">
             { showMiniPlayer && <div className="wrapper">
@@ -39,7 +61,7 @@ class player extends Component {
                 {isPlaying && <Icon className="icon" onClick={this.toggleStatus} type="pause-circle" style={{fontSize: '30px'}} />}
                 {!isPlaying && <Icon className="icon" onClick={this.toggleStatus} type="play-circle" style={{fontSize: '30px'}} />}
                 <Icon className="icon" type="menu-unfold" style={{fontSize: '30px'}} />
-                <audio autoPlay ref={this.audioPlayer} src={`https://music.163.com/song/media/outer/url?id=${this.props.currentMusic.id}.mp3`}></audio>
+                <audio onEnded={this.musicEnded} autoPlay ref={this.audioPlayer} src={fullAudioSrc(this.props.currentMusic.id)}></audio>
             </div>
                 
             }

@@ -3,7 +3,7 @@ import './collection.scss'
 import { getSongListDetail } from '../../api'
 import { Icon } from 'antd'
 import store from '../../store';
-import { setShowPlayer, setCurrentMusic, setPlayList } from '../../store/actions';
+import { setShowPlayer, setCurrentMusic, setPlayList, setCurrentIndex } from '../../store/actions';
 
 class songList extends Component {
     constructor(props) {
@@ -21,10 +21,11 @@ class songList extends Component {
         store.dispatch(setShowPlayer(true))
         store.dispatch(setCurrentMusic(music))
         store.dispatch(setPlayList(this.state.collectionDetail))
+        store.dispatch(setCurrentIndex(index))
+        // store.dispatch(setAllPlay(this.state.collectionDetail, index))
     }
 
     componentDidMount() {
-        console.log(this.props);
         getSongListDetail({id: this.props.match.params.id}).then(res => {
             this.setState({
                 collectionDetail: res.result

@@ -22,7 +22,7 @@ class App extends Component {
             </Switch>
           </div>
           {this.props.showPlayer && <div className="bottom">
-              <Player currentMusic={this.props.currentMusic} />
+              <Player currentMusic={this.props.currentMusic} currentIndex={this.props.currentIndex} playList={this.props.playList} />
             </div>
           }
         </div>
@@ -34,7 +34,8 @@ class App extends Component {
 const mapStateToProps = state => ({
   showPlayer: state.showPlayer,
   currentMusic: state.currentMusic,
-  playList: state.playList
+  playList: state.playList,
+  currentIndex: state.currentIndex,
 })
 
 export default connect(mapStateToProps)(App)
