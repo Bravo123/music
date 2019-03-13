@@ -11,11 +11,19 @@ class player extends Component {
         this.state = {
             showMiniPlayer: true,
             isPlaying: true,
-            currentIndex: -1
+            currentIndex: -1,
+            isShowPlayList: false,
         }
         this.audioPlayer = React.createRef()
         this.toggleStatus = this.toggleStatus.bind(this)
-        this.musicEnded = this.musicEnded.bind(this);
+        this.musicEnded = this.musicEnded.bind(this)
+        this.togglePlayList = this.togglePlayList.bind(this);
+    }
+
+    togglePlayList() {
+        this.setState({
+            isShowPlayList: !this.state.isShowPlayList
+        })
     }
 
     toggleStatus() {
@@ -27,6 +35,20 @@ class player extends Component {
         this.setState({
             isPlaying: !this.state.isPlaying
         })
+    }
+
+    playMusic(music, index) {
+        this.setState({
+            currentIndex: index,
+            isPlaying: true,
+        })
+        store.dispatch(setCurrentMusic(music))
+        store.dispatch(setCurrentIndex(index))
+    }
+
+    removeMusic(e, music, index) {
+        e.stopPropagation()
+        console.log(e, music, index)
     }
 
     musicEnded() {
@@ -49,7 +71,7 @@ class player extends Component {
     }
 
     render() {
-        const { showMiniPlayer, isPlaying } = this.state
+        const { showMiniPlayer, isPlaying, isShowPlayList, currentIndex } = this.state
         return (
             <div className="player">
             { showMiniPlayer && <div className="wrapper">
@@ -60,10 +82,23 @@ class player extends Component {
                 </div>
                 {isPlaying && <Icon className="icon" onClick={this.toggleStatus} type="pause-circle" style={{fontSize: '30px'}} />}
                 {!isPlaying && <Icon className="icon" onClick={this.toggleStatus} type="play-circle" style={{fontSize: '30px'}} />}
-                <Icon className="icon" type="menu-unfold" style={{fontSize: '30px'}} />
+                <Icon className="icon" onClick={this.togglePlayList} type="menu-unfold" style={{fontSize: '30px'}} />
                 <audio onEnded={this.musicEnded} autoPlay ref={this.audioPlayer} src={fullAudioSrc(this.props.currentMusic.id)}></audio>
             </div>
-                
+            }
+            { isShowPlayList && <div className="play-list">
+                <div className="mask" onClick={this.togglePlayList}></div>
+                <div className="wrapper">
+                    <header>当前播放数：{this.props.playList.tracks.length}</header>
+                    <ul className="list">
+                        { this.props.playList.tracks.map((item, index) => <li key={index + item.id} className={currentIndex === index ? `${'active'} ${'item'}` : 'item'} onClick={() => {this.playMusic(item, index)}}>
+                            {item.name} - {item.artists[0].name}
+                            <Icon type="close" onClick={(e) => {this.removeMusic(e, item, index)}} style={{fontSize: '24px', color: '#999', marginRight: '20px'}} />
+                        </li>)
+                        }
+                    </ul>
+                </div>
+            </div>
             }
             </div>
         );

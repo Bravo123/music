@@ -2,15 +2,14 @@ import React, { Component } from 'react'
 import './collection.scss'
 import { getSongListDetail } from '../../api'
 import { Icon } from 'antd'
-import store from '../../store';
-import { setShowPlayer, setCurrentMusic, setPlayList, setCurrentIndex } from '../../store/actions';
-
+import store from '../../store'
+import { setShowPlayer, setCurrentMusic, setPlayList, setCurrentIndex } from '../../store/actions'
+import { connect } from 'react-redux'
 class songList extends Component {
     constructor(props) {
         super(props)
         this.state = {
             collectionDetail: null,
-            currentIndex: -1,
         };
     }
 
@@ -28,13 +27,13 @@ class songList extends Component {
     componentDidMount() {
         getSongListDetail({id: this.props.match.params.id}).then(res => {
             this.setState({
-                collectionDetail: res.result
+                collectionDetail: res.result,
             });
         })
     }
     
     render() {
-        const { collectionDetail, currentIndex } = this.state;
+        const { collectionDetail } = this.state;
         return (
             <div>
             { collectionDetail && 
@@ -59,7 +58,7 @@ class songList extends Component {
                     <div className="song-wrapper">
                     {
                         collectionDetail.tracks.map((track, index) => 
-                            <div onClick={() => this.playMusic(track, index)} className={index === currentIndex ? `${'track-item'} ${'active'}` : 'track-item'} key={track.id} data-index={index + 1}>
+                            <div onClick={() => this.playMusic(track, index)} className={index === this.props.currentIndex ? `${'track-item'} ${'active'}` : 'track-item'} key={track.id} data-index={index + 1}>
                                 <div className="track-name">{track.name}</div>
                                 <div className="track-desc">{track.artists[0].name} - {track.album.name}</div>
                             </div>
@@ -73,4 +72,13 @@ class songList extends Component {
     }
 }
 
-export default songList;
+const mapStateToProps = state => ({
+    // showPlayer: state.showPlayer,
+    // currentMusic: state.currentMusic,
+    // playList: state.playList,
+    currentIndex: state.currentIndex,
+})
+  
+export default connect(mapStateToProps)(songList)
+
+// export default songList;
