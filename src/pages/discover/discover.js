@@ -71,7 +71,7 @@ class Discover extends Component {
                             <span>排行版</span>
                         </div>
                     </div>
-                    <RecommendList title={'推荐歌单'} list={personalized} onItemClick={this.goCollection}></RecommendList>
+                    <RecommendList title={'推荐歌单'} list={personalized} goCollectionList={this.goHotCollectionList} onItemClick={this.goCollection}></RecommendList>
                 </div> }
             </div>
         );

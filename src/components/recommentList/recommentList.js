@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import './recommentList.scss';
 
 const recommentList = props => {
-    const {title, list, onItemClick} = props;
+    const {title, list, onItemClick, goCollectionList} = props;
     return (
         <div className="recomment">
-            <div className="header">{title}</div>
+            <div className="header" onClick={goCollectionList}>{title}</div>
             <div className="recomment-list">
                 {
                     list && list.length && list.map(item => 
