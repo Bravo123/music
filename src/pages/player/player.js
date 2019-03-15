@@ -17,7 +17,14 @@ class player extends Component {
         this.audioPlayer = React.createRef()
         this.toggleStatus = this.toggleStatus.bind(this)
         this.musicEnded = this.musicEnded.bind(this)
-        this.togglePlayList = this.togglePlayList.bind(this);
+        this.togglePlayList = this.togglePlayList.bind(this)
+        this.toggleFullPage = this.toggleFullPage.bind(this)
+    }
+
+    toggleFullPage() {
+        this.setState({
+            showMiniPlayer: !this.state.showMiniPlayer
+        })
     }
 
     togglePlayList() {
@@ -74,17 +81,43 @@ class player extends Component {
         const { showMiniPlayer, isPlaying, isShowPlayList, currentIndex } = this.state
         return (
             <div className="player">
+            <audio onEnded={this.musicEnded} autoPlay ref={this.audioPlayer} src={fullAudioSrc(this.props.currentMusic.id)}></audio>
             { showMiniPlayer && <div className="wrapper">
-                <img className="cover" src={this.props.currentMusic.album.picUrl} alt="" />
-                <div className="music-info">
+                <img className="cover" onClick={this.toggleFullPage} src={this.props.currentMusic.album.picUrl} alt="" />
+                <div className="music-info" onClick={this.toggleFullPage}>
                     <div className="name">{this.props.currentMusic.name}</div>
                     <div className="author">{this.props.currentMusic.artists[0].name}</div>
                 </div>
                 {isPlaying && <Icon className="icon" onClick={this.toggleStatus} type="pause-circle" style={{fontSize: '30px'}} />}
                 {!isPlaying && <Icon className="icon" onClick={this.toggleStatus} type="play-circle" style={{fontSize: '30px'}} />}
                 <Icon className="icon" onClick={this.togglePlayList} type="menu-unfold" style={{fontSize: '30px'}} />
-                <audio onEnded={this.musicEnded} autoPlay ref={this.audioPlayer} src={fullAudioSrc(this.props.currentMusic.id)}></audio>
             </div>
+            }
+            { !showMiniPlayer && <div className="full-page-player">
+                <img className="cover" src={this.props.currentMusic.album.picUrl} alt="cover" />
+                <div className="header">
+                    <Icon type="arrow-left" onClick={this.toggleFullPage} className="back" style={{fontSize: "24px", color: "#ddd"}} />
+                    <div className="music-name">{this.props.currentMusic.name}</div>
+                    <div className="author-name">{this.props.currentMusic.artists[0].name}</div>
+                </div>
+                <div className={isPlaying ? 'body' : 'body pause'}>
+                    <div className="needle"></div>
+                    <div className="disc">
+                        <img className="disc-img" src={this.props.currentMusic.album.picUrl} alt="cover" />
+                    </div>
+                </div>
+                <div className="footer">
+                    <div className="progress-wrapper"></div>
+                    <div className="btn-wrapper">
+                        <Icon type="step-backward" style={{fontSize: "36px", color: "#eee"}} />
+                        {!isPlaying && <Icon type="play-circle" onClick={this.toggleStatus} style={{fontSize: "36px", color: "#eee"}} />}
+                        {isPlaying && <Icon type="pause-circle" onClick={this.toggleStatus} style={{fontSize: "36px", color: "#eee"}} />}
+                        <Icon type="step-forward" style={{fontSize: "36px", color: "#eee"}} />
+                        <Icon className="icon" onClick={this.togglePlayList} type="menu-unfold" style={{fontSize: '30px', color: '#eee'}} />
+                    </div>
+                </div>
+            </div>
+
             }
             { isShowPlayList && <div className="play-list">
                 <div className="mask" onClick={this.togglePlayList}></div>

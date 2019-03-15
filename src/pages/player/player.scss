@@ -87,3 +87,150 @@
         }
     }
 }
+.full-page-player {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 10;
+    background-color: #000;
+    .cover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(30px);
+        object-fit: contain;
+    }
+    .header {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 60px;
+        width: 100%;
+        height: 60px;
+        border-bottom: .5px solid rgba(255, 255, 255, .5);
+        background-color: transparent;
+        .back {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .music-name, .author-name {
+            width: 100%;
+            @include no-wrap;
+        }
+        .music-name {
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #fff;
+        }
+        .author-name {
+            font-size: 12px;
+            color: #eee;
+        }
+    }
+    .body {
+        position: relative;
+        width: 100%;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: all .5s;
+        &.pause {
+            .disc {
+                &::before {
+                    animation: none;
+                }
+            }
+            .disc-img {
+                animation: none !important;
+            }
+            .needle {
+                top: -42px;
+                transform: translate3d(-3.24074vw,0,0) rotate(-30deg);
+            }
+        }
+        .needle {
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            width: 96px;
+            height: 144px;
+            z-index: 10;
+            background-image: url('../../static/needle.png');
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+        .disc {
+            position: relative;
+            margin-top: -80px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            // overflow: hidden;
+            &::before {
+                content: '';
+                position: absolute;
+                top: -40px;
+                left: -40px;
+                width: 280px;
+                height: 280px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #000, #000 45%, rgba(255, 255, 255, .1) 50%, #000 55%, #000);;
+                z-index: 2;
+                animation: rotate linear infinite 12s;
+            }
+            &::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 290px;
+                height: 290px;
+                border-radius: 50%;
+                background-color: #555;
+                z-index: 1;
+            }
+            .disc-img {
+                position: relative;
+                object-fit: contain;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                z-index: 3;
+                animation: rotate linear infinite 12s;
+            }
+            @keyframes rotate {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        }
+    }
+    .footer {
+        position: relative;
+        width: 100%;
+        height: 110px;
+        .btn-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            height: 90px;
+            width: 100%;
+        }
+    }
+}
